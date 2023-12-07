@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "bigshot",
+  "name": "BigShot",
+  "version": "${version}",
+  "environment": "client",
+  "icon": "assets/bigshot/icon.png",
+  "authors": [
+    "Jaredlll08"
+  ],
+  "license": "MIT",
+  "contact": {
+    "homepage": "https://minecraft.curseforge.com/projects/bigshot",
+    "sources": "https://github.com/jaredlll08/bigshot"
+  },
+  "description": "Creates big screenshots",
+  "entrypoints": {
+    "client": [
+      "com.blamejared.bigshot.BigShotFabric"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14",
+    "java": ">=17",
+    "minecraft": "1.20.1"
+  },
+  "recommends": {
+    "fabric": "*"
+  },
+  "mixins": [
+    {
+      "config": "bigshot.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "bigshot.fabric.mixins.json",
+      "environment": "client"
+    }
+  ]
+}
