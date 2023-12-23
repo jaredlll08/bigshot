@@ -14,5 +14,5 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "refmap": "bigshot.refmap.json"
+  "refmap": "${MODID}.refmap.json"
 }
