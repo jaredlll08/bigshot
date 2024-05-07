@@ -2,19 +2,20 @@ package com.blamejared.bigshot;
 
 
 import net.minecraft.client.Minecraft;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.TickEvent;
 
-@Mod("bigshot")
+@Mod(value = "bigshot", dist = Dist.CLIENT)
 public class BigShotNeoForge {
     
-    public BigShotNeoForge() {
+    public BigShotNeoForge(IEventBus eventBus) {
         
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(BigShotNeoForge::registerBindings);
+        eventBus.addListener(BigShotNeoForge::registerBindings);
         NeoForge.EVENT_BUS.addListener(BigShotNeoForge::onClientTick);
     }
     
@@ -27,18 +28,16 @@ public class BigShotNeoForge {
     }
     
     @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
+    public static void onClientTick(ClientTickEvent.Post event) {
         
-        if(event.phase == TickEvent.Phase.END) {
-            while(BigShot.KEY_2X_SCREENSHOT.consumeClick()) {
-                BigShot.takeScreenshot(2, component -> Minecraft.getInstance().gui.getChat().addMessage(component));
-            }
-            while(BigShot.KEY_3X_SCREENSHOT.consumeClick()) {
-                BigShot.takeScreenshot(3, component -> Minecraft.getInstance().gui.getChat().addMessage(component));
-            }
-            while(BigShot.KEY_4X_SCREENSHOT.consumeClick()) {
-                BigShot.takeScreenshot(4, component -> Minecraft.getInstance().gui.getChat().addMessage(component));
-            }
+        while(BigShot.KEY_2X_SCREENSHOT.consumeClick()) {
+            BigShot.takeScreenshot(2, component -> Minecraft.getInstance().gui.getChat().addMessage(component));
+        }
+        while(BigShot.KEY_3X_SCREENSHOT.consumeClick()) {
+            BigShot.takeScreenshot(3, component -> Minecraft.getInstance().gui.getChat().addMessage(component));
+        }
+        while(BigShot.KEY_4X_SCREENSHOT.consumeClick()) {
+            BigShot.takeScreenshot(4, component -> Minecraft.getInstance().gui.getChat().addMessage(component));
         }
     }
     
