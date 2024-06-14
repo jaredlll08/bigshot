@@ -5,6 +5,7 @@ import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.Util;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
@@ -55,7 +56,7 @@ public class BigShot {
             mc.getWindow().setWidth(oldWidth * scale);
             mc.getWindow().setHeight(oldHeight * scale);
             newTarget.bindWrite(true);
-            mc.gameRenderer.render(1.0F, 0L, true);
+            mc.gameRenderer.render(DeltaTracker.ONE, true);
             Screenshot.grab(folder, newTarget, consumer);
         } catch(Exception var18) {
             consumer.accept(Component.translatable("screenshot.failure", var18.getMessage()));
