@@ -1,4 +1,4 @@
-package com.blamejared.bigshot.gradle
+package com.blamejared
 
 object Properties {
     const val GROUP = "com.blamejared.bigshot"

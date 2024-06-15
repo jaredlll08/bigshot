@@ -1,4 +1,4 @@
-package com.blamejared.bigshot.gradle
+package com.blamejared
 
 object Versions {
     const val MOD = "7.0"
