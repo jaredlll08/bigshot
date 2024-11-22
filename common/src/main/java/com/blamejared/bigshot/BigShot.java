@@ -1,8 +1,9 @@
 package com.blamejared.bigshot;
 
+import com.blamejared.bigshot.mixin.WindowAccess;
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.Util;
 import net.minecraft.client.DeltaTracker;
@@ -47,28 +48,36 @@ public class BigShot {
     public static void takeScreenshot(File folder, int scale, Consumer<Component> consumer) {
         
         Minecraft mc = Minecraft.getInstance();
-        int oldWidth = mc.getWindow().getWidth();
-        int oldHeight = mc.getWindow().getHeight();
-        RenderTarget newTarget = new TextureTarget(oldWidth * scale, oldHeight * scale, true, Minecraft.ON_OSX);
+        Window window = mc.getWindow();
+        WindowAccess windowAccess = (WindowAccess) (Object) window;
+        
+        int oldWidth = window.getWidth();
+        int oldHeight = window.getHeight();
+        int newWidth = oldWidth * scale;
+        int newHeight = oldHeight * scale;
+        double oldGuiScale = window.getGuiScale();
+        RenderTarget target = mc.getMainRenderTarget();
         try {
             BigShot.TAKING_SCREENSHOT = true;
-            mc.levelRenderer.graphicsChanged();
-            mc.getWindow().setWidth(oldWidth * scale);
-            mc.getWindow().setHeight(oldHeight * scale);
-            newTarget.bindWrite(true);
+            window.setWidth(newWidth);
+            window.setHeight(newHeight);
+            target.resize(newWidth, newHeight);
+            windowAccess.bigshot$onResize(0, newWidth, newHeight);
+            window.setGuiScale(oldGuiScale * scale);
+            target.bindWrite(true);
             mc.gameRenderer.render(DeltaTracker.ONE, true);
-            Screenshot.grab(folder, newTarget, consumer);
+            Screenshot.grab(folder, target, consumer);
         } catch(Exception var18) {
             consumer.accept(Component.translatable("screenshot.failure", var18.getMessage()));
             var18.printStackTrace();
         } finally {
             BigShot.TAKING_SCREENSHOT = false;
-            mc.getWindow().setWidth(oldWidth);
-            mc.getWindow().setHeight(oldHeight);
-            mc.levelRenderer.graphicsChanged();
-            newTarget.destroyBuffers();
+            window.setWidth(oldWidth);
+            window.setHeight(oldHeight);
+            target.resize(oldWidth, oldHeight);
+            windowAccess.bigshot$onResize(0, oldWidth, oldHeight);
+            window.setGuiScale(oldGuiScale);
             mc.getMainRenderTarget().bindWrite(true);
-            
         }
         
     }
