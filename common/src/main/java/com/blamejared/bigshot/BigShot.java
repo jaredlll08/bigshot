@@ -1,10 +1,13 @@
 package com.blamejared.bigshot;
 
 import com.blamejared.bigshot.mixin.WindowAccess;
+import com.mojang.blaze3d.opengl.GlDevice;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.textures.GpuTexture;
+import com.mojang.blaze3d.textures.TextureFormat;
 import net.minecraft.Util;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
@@ -38,11 +41,7 @@ public class BigShot {
     public static void takeScreenshot(int scale, Consumer<Component> consumer) {
         
         Minecraft mc = Minecraft.getInstance();
-        if(!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(() -> takeScreenshot(mc.gameDirectory, scale, consumer));
-        } else {
-            takeScreenshot(mc.gameDirectory, scale, consumer);
-        }
+        takeScreenshot(mc.gameDirectory, scale, consumer);
     }
     
     public static void takeScreenshot(File folder, int scale, Consumer<Component> consumer) {
@@ -64,7 +63,6 @@ public class BigShot {
             target.resize(newWidth, newHeight);
             windowAccess.bigshot$onResize(0, newWidth, newHeight);
             window.setGuiScale(oldGuiScale * scale);
-            target.bindWrite(true);
             mc.gameRenderer.render(DeltaTracker.ONE, true);
             Screenshot.grab(folder, target, consumer);
         } catch(Exception var18) {
@@ -77,7 +75,6 @@ public class BigShot {
             target.resize(oldWidth, oldHeight);
             windowAccess.bigshot$onResize(0, oldWidth, oldHeight);
             window.setGuiScale(oldGuiScale);
-            mc.getMainRenderTarget().bindWrite(true);
         }
         
     }
