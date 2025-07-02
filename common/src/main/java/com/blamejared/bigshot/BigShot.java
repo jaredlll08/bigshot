@@ -54,7 +54,7 @@ public class BigShot {
         int oldHeight = window.getHeight();
         int newWidth = oldWidth * scale;
         int newHeight = oldHeight * scale;
-        double oldGuiScale = window.getGuiScale();
+        int oldGuiScale = window.getGuiScale();
         RenderTarget target = mc.getMainRenderTarget();
         try {
             BigShot.TAKING_SCREENSHOT = true;
@@ -62,7 +62,7 @@ public class BigShot {
             window.setHeight(newHeight);
             target.resize(newWidth, newHeight);
             windowAccess.bigshot$onResize(0, newWidth, newHeight);
-            window.setGuiScale(oldGuiScale * scale);
+            window.setGuiScale((oldGuiScale * scale));
             mc.gameRenderer.render(DeltaTracker.ONE, true);
             Screenshot.grab(folder, target, consumer);
         } catch(Exception var18) {
@@ -74,7 +74,7 @@ public class BigShot {
             window.setHeight(oldHeight);
             target.resize(oldWidth, oldHeight);
             windowAccess.bigshot$onResize(0, oldWidth, oldHeight);
-            window.setGuiScale(oldGuiScale);
+            window.setGuiScale( oldGuiScale);
         }
         
     }
