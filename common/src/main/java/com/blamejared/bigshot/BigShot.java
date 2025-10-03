@@ -23,17 +23,17 @@ public class BigShot {
     public static final KeyMapping KEY_2X_SCREENSHOT = Util.make(() -> new KeyMapping(
             "key.bigshot.take_screenshot_2x",
             InputConstants.UNKNOWN.getValue(),
-            "key.categories.misc"
+            KeyMapping.Category.MISC
     ));
     public static final KeyMapping KEY_3X_SCREENSHOT = Util.make(() -> new KeyMapping(
             "key.bigshot.take_screenshot_3x",
             InputConstants.UNKNOWN.getValue(),
-            "key.categories.misc"
+            KeyMapping.Category.MISC
     ));
     public static final KeyMapping KEY_4X_SCREENSHOT = Util.make(() -> new KeyMapping(
             "key.bigshot.take_screenshot_4x",
             InputConstants.UNKNOWN.getValue(),
-            "key.categories.misc"
+            KeyMapping.Category.MISC
     ));
     
     public static boolean TAKING_SCREENSHOT = false;
