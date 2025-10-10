@@ -17,5 +17,4 @@ plugins {
 rootProject.name = "bigshot"
 include("common")
 include("fabric")
-//include("forge")
 include("neoforge")
