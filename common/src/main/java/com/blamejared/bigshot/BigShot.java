@@ -1,19 +1,15 @@
 package com.blamejared.bigshot;
 
 import com.blamejared.bigshot.mixin.WindowAccess;
-import com.mojang.blaze3d.opengl.GlDevice;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.GpuTexture;
-import com.mojang.blaze3d.textures.TextureFormat;
-import net.minecraft.Util;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Util;
 
 import java.io.File;
 import java.util.function.Consumer;
@@ -74,7 +70,7 @@ public class BigShot {
             window.setHeight(oldHeight);
             target.resize(oldWidth, oldHeight);
             windowAccess.bigshot$onResize(0, oldWidth, oldHeight);
-            window.setGuiScale( oldGuiScale);
+            window.setGuiScale(oldGuiScale);
         }
         
     }
